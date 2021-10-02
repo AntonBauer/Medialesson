@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PicturesCompare.Domain.Enums;
 using PicturesCompare.Domain.HashServices;
@@ -17,7 +18,8 @@ namespace PicturesCompare.Domain.Extensions
                     return options.HashType switch
                     {
                         HashType.Average => new AverageHashService(),
-                        HashType.Perceptual => new PerceptualHashService()
+                        HashType.Perceptual => new PerceptualHashService(),
+                        _ => throw new ArgumentOutOfRangeException(nameof(options.HashType), "Unknown hash type")
                     };
                 });
     }

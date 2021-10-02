@@ -2,5 +2,6 @@
 {
     internal interface IHashService
     {
+        int CalculateHash(string image);
     }
 }

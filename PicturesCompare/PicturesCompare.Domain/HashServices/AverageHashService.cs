@@ -2,6 +2,9 @@
 {
     internal sealed class AverageHashService : IHashService
     {
-        
+        public int CalculateHash(string image)
+        {
+            return image.GetHashCode();
+        }
     }
 }
