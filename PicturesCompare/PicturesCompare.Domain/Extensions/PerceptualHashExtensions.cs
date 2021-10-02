@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SixLabors.ImageSharp;
 
 namespace PicturesCompare.Domain.Extensions
 {
     internal static class PerceptualHashExtensions
     {
-        public static byte[] ApplyDcsPerRows(this byte[] image, int rowLength) => image;
+        public static Image ApplyDcsPerRows(this Image image) => image;
 
-        public static byte[] ApplyDcsPerColumns(this byte[] image, int columnLength) => image;
+        public static Image ApplyDcsPerColumns(this Image image) => image;
 
-        public static int CalcPerceptualHash(this byte[] image)
+        public static int CalcPerceptualHash(this Image image)
         {
             var median = image.Median();
             
@@ -25,7 +26,7 @@ namespace PicturesCompare.Domain.Extensions
             return BitConverter.ToInt32(hashBytes);
         }
 
-        private static int Median(this byte[] image)
+        private static int Median(this Image image)
         {
             var sortedValues = image.OrderBy(v => v).ToArray();
 

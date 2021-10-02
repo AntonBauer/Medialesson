@@ -1,7 +1,9 @@
-﻿namespace PicturesCompare.Domain.HashServices
+﻿using SixLabors.ImageSharp;
+
+namespace PicturesCompare.Domain.HashServices
 {
     internal interface IHashService
     {
-        int CalculateHash(string image);
+        int CalculateHash(Image image);
     }
 }

@@ -1,19 +1,28 @@
-﻿using System;
-using System.Linq;
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
 
 namespace PicturesCompare.Domain.Extensions
 {
     internal static class ImageExtensions
     {
-        // ToDo: implement image operations
-        public static byte[] ToGrayscale(this string image) => Array.Empty<byte>();
+        public static Image Load(this string imagePath) => Image.Load(imagePath);
 
-        public static byte[] ScaleTo(this byte[] image, int width, int height) =>
-            Enumerable.Repeat((byte)0, width * height)
-               .ToArray();
+        public static Image ToGrayscale(this Image image)
+        {
+            image.Mutate(ctx => ctx.Grayscale());
+            return image;
+        }
 
-        public static byte[] CropTo(this byte[] image, int width, int height) =>
-            Enumerable.Repeat((byte)0, width * height)
-               .ToArray();
+        public static Image ScaleTo(this Image image, int width, int height)
+        {
+            image.Mutate(ctx => ctx.Resize(width, height));
+            return image;
+        }
+
+        public static Image CropTo(this Image image, int width, int height)
+        {
+            image.Mutate(ctx => ctx.Crop(width, height));
+            return image;
+        }
     }
 }

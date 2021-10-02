@@ -19,8 +19,8 @@ namespace PicturesCompare.Domain.PhotoComparisonServices
         {
             EnsureFilesExists(filePathImageA, filePathImageB);
 
-            var imageAHash = filePathImageA.LoadImage().CalculateHash(_hashService);
-            var imageBHash = filePathImageB.LoadImage().CalculateHash(_hashService);
+            var imageAHash = filePathImageA.Load().CalculateHash(_hashService);
+            var imageBHash = filePathImageB.Load().CalculateHash(_hashService);
 
             return Task.FromResult(imageAHash == imageBHash);
         }
