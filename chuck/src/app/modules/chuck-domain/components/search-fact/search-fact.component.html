@@ -1,0 +1,14 @@
+<form [formGroup]="searchForm">
+  <mat-form-field class="example-full-width"
+                  appearance="fill">
+    <mat-label>Search query</mat-label>
+    <input matInput
+           formControlName="searchQuery">
+  </mat-form-field>
+</form>
+
+<button mat-button
+        (click)="findFact()">
+  Search for THE fact
+</button>
+

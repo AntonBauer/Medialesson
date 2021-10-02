@@ -1,0 +1,11 @@
+<mat-card>
+  {{activeFact?.value ?? 'Waiting for fact'}}
+</mat-card>
+
+<chk-random-fact (factLoaded)="showFact($event)"></chk-random-fact>
+<mat-divider></mat-divider>
+
+<chk-random-from-category (factLoaded)="showFact($event)"></chk-random-from-category>
+<mat-divider></mat-divider>
+
+<chk-search-fact (factLoaded)="showFact($event)"></chk-search-fact>

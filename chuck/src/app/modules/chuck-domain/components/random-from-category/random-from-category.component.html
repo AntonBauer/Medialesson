@@ -1,0 +1,19 @@
+<form [formGroup]="categoriesForm">
+  <mat-form-field *ngIf="categories"
+                  appearance="fill">
+    <mat-label>Select category</mat-label>
+    <mat-select formControlName="selectedCategory"
+                required>
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let category of categories"
+                  [value]="category">
+        {{category}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<button mat-button
+        (click)="loadFromCategory()">
+  Load from selected category
+</button>
