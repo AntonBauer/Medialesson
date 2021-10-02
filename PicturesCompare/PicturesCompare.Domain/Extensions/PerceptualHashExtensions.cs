@@ -19,9 +19,10 @@ namespace PicturesCompare.Domain.Extensions
 
         public static int CalcPerceptualHash(this Image<Rgb24> image)
         {
-            var median = image.Median();
+            var imageBytes = image.ToByteArray();
+            var median = imageBytes.Median();
             
-            var hashBytes = image.ToByteArray().Aggregate(
+            var hashBytes = imageBytes.Aggregate(
                 new List<byte>(image.Height * image.Width),
                 (acc, pixel) =>
                 {
@@ -32,9 +33,8 @@ namespace PicturesCompare.Domain.Extensions
             return BitConverter.ToInt32(hashBytes);
         }
 
-        private static int Median(this Image<Rgb24> image)
+        private static int Median(this byte[] imageBytes)
         {
-            var imageBytes = image.ToByteArray();
             var sortedValues = imageBytes.OrderBy(v => v).ToArray();
 
             var isEven = sortedValues.Length % 2 == 0;

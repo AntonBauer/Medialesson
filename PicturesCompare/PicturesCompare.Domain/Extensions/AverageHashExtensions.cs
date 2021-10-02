@@ -10,9 +10,10 @@ namespace PicturesCompare.Domain.Extensions
     {
         public static int CalcAverageHash(this Image<Rgb24> image)
         {
-            var average = image.Average();
+            var imageBytes = image.ToByteArray();
+            var average = imageBytes.Average();
             
-            var hashBytes = image.ToByteArray().Aggregate(
+            var hashBytes = imageBytes.Aggregate(
                 new List<byte>(image.Width * image.Height),
                 (acc, pixel) =>
                 {
@@ -23,7 +24,7 @@ namespace PicturesCompare.Domain.Extensions
             return BitConverter.ToInt32(hashBytes);
         }
 
-        private static int Average(this Image<Rgb24> image) =>
-             image.ToByteArray().Select(b => (int)b).Sum() / (image.Width * image.Height);   
+        private static int Average(this byte[] image) =>
+             image.Select(b => (int)b).Sum() / (image.Length);   
     }
 }
