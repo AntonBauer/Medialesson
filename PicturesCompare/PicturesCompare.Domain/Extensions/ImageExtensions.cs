@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using PicturesCompare.Domain.HashServices;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
@@ -7,6 +8,9 @@ namespace PicturesCompare.Domain.Extensions
     internal static class ImageExtensions
     {
         public static Image<Rgb24> Load(this string imagePath) => Image.Load<Rgb24>(imagePath);
+        
+        public static int CalculateHash(this Image<Rgb24> image, IHashService hashService) =>
+            hashService.CalculateHash(image);
 
         public static Image<Rgb24> ToGrayscale(this Image<Rgb24> image)
         {
@@ -26,9 +30,9 @@ namespace PicturesCompare.Domain.Extensions
             return image;
         }
 
-        // ToDo: convert image to byte array
         public static byte[] ToByteArray(this Image<Rgb24> image)
         {
+            // Prerequisite - image is grayscale
             var bytes = new byte[image.Width * image.Height];
             
             for (var i = 0; i < image.Width; i++)
