@@ -12,6 +12,7 @@ namespace PicturesCompare.Cli
             Host.CreateDefaultBuilder(args)
                .ConfigureServices((context, services) =>
                     services
+                       .AddCompareOptions(context.Configuration)
                        .AddHostedService<PicturesComparison>()
                        .AddDomain(context.Configuration)
                 );

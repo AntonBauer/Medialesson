@@ -12,6 +12,11 @@ namespace PicturesCompare.Domain.Extensions
 
         public static Image<Rgb24> ApplyDcsPerColumns(this Image<Rgb24> image) => image;
 
+        public static void ApplyDcs()
+        {
+            
+        }
+
         public static int CalcPerceptualHash(this Image<Rgb24> image)
         {
             var median = image.Median();

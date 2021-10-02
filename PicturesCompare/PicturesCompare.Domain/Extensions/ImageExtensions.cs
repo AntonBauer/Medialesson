@@ -27,6 +27,19 @@ namespace PicturesCompare.Domain.Extensions
         }
 
         // ToDo: convert image to byte array
-        public static byte[] ToByteArray(this Image<Rgb24> image) => new byte[image.Width * image.Height];
+        public static byte[] ToByteArray(this Image<Rgb24> image)
+        {
+            var bytes = new byte[image.Width * image.Height];
+            
+            for (var i = 0; i < image.Width; i++)
+            {
+                for (var j = 0; j < image.Height; j++)
+                {
+                    bytes[image.Width * i + j] = image[i, j].B;
+                }
+            }
+
+            return bytes;
+        }
     }
 }
