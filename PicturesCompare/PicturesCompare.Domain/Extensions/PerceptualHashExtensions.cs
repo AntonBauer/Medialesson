@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace PicturesCompare.Domain.Extensions
 {
     internal static class PerceptualHashExtensions
     {
-        public static Image ApplyDcsPerRows(this Image image) => image;
+        public static Image<Rgb24> ApplyDcsPerRows(this Image<Rgb24> image) => image;
 
-        public static Image ApplyDcsPerColumns(this Image image) => image;
+        public static Image<Rgb24> ApplyDcsPerColumns(this Image<Rgb24> image) => image;
 
-        public static int CalcPerceptualHash(this Image image)
+        public static int CalcPerceptualHash(this Image<Rgb24> image)
         {
             var median = image.Median();
             
-            var hashBytes = image.Aggregate(
-                new List<byte>(image.Length),
+            var hashBytes = image.ToByteArray().Aggregate(
+                new List<byte>(image.Height * image.Width),
                 (acc, pixel) =>
                 {
                     acc.Add((byte)Math.Sign(pixel - median));
@@ -26,9 +27,10 @@ namespace PicturesCompare.Domain.Extensions
             return BitConverter.ToInt32(hashBytes);
         }
 
-        private static int Median(this Image image)
+        private static int Median(this Image<Rgb24> image)
         {
-            var sortedValues = image.OrderBy(v => v).ToArray();
+            var imageBytes = image.ToByteArray();
+            var sortedValues = imageBytes.OrderBy(v => v).ToArray();
 
             var isEven = sortedValues.Length % 2 == 0;
             var middleIndex = sortedValues.Length / 2;

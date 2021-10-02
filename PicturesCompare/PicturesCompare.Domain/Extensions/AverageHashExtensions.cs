@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace PicturesCompare.Domain.Extensions
 {
     internal static class AverageHashExtensions
     {
-        public static int CalcAverageHash(this Image image)
+        public static int CalcAverageHash(this Image<Rgb24> image)
         {
             var average = image.Average();
             
-            var hashBytes = image.Aggregate(
-                new List<byte>(image.Length),
+            var hashBytes = image.ToByteArray().Aggregate(
+                new List<byte>(image.Width * image.Height),
                 (acc, pixel) =>
                 {
                     acc.Add((byte)Math.Sign(pixel - average));
@@ -22,6 +23,7 @@ namespace PicturesCompare.Domain.Extensions
             return BitConverter.ToInt32(hashBytes);
         }
 
-        private static byte Average(this Image image) => (byte)(image.Select(b => (int)b).Sum() / image.Length);
+        private static int Average(this Image<Rgb24> image) =>
+             image.ToByteArray().Select(b => (int)b).Sum() / (image.Width * image.Height);   
     }
 }
